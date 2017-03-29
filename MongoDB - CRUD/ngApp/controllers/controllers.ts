@@ -1,51 +1,50 @@
-namespace productsapp.Controllers {
+namespace myapp.Controllers {
 
     export class HomeController {
-        public products;
-        public product;
+      public movies
 
-
-        public save() {
-          this.productService.save(this.product).then(() => {
-            this.products = this.productService.list();
-            this.product = null;
-          });
-        }
-
-        public remove(id) {
-          this.productService.remove(id).then(() => {
-            this.products = this.productService.list();
-          });
-        }
-
-        constructor(private productService:productsapp.Services.ProductService) {
-          this.products = productService.list();
-        }
-
-    }
-
-    export class EditController {
-      public product;
-
-      public save() {
-        this.productService.save(this.product).then(() => {
-          this.$state.go('home');
-        });
+      public deleteMovie(id) {
+        this.movieService.removeMovie(id);
       }
 
       constructor(
-        private productService:productsapp.Services.ProductService,
-        private $state:ng.ui.IStateService,
-        private $stateParams:ng.ui.IStateParamsService
+        private movieService
       ) {
-        let productId = $stateParams['id'];
-        this.product = productService.get(productId);
+        this.movies = this.movieService.getMovies();
       }
-
     }
 
-    export class AboutController {
-        public message = 'Hello from the about page!';
+    export class AddMovieController {
+      public movie
+
+      public addMovie() {
+        this.movieService.saveMovie(this.movie);
+      }
+
+      public constructor(
+        private movieService
+      ) {
+
+      }
+    }
+
+    export class EditMovieController {
+      public movie
+      public id
+
+      public editMovie() {
+        this.movie.id = this.id;
+        this.movieService.saveMovie(this.movie);
+      }
+
+      constructor(
+        private movieService,
+        public $stateParams
+      ) {
+        if($stateParams) {
+          this.id = $stateParams['id'];
+        }
+      }
     }
 
 }

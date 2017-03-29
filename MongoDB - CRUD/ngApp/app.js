@@ -1,24 +1,24 @@
-var productsapp;
-(function (productsapp) {
-    angular.module('productsapp', ['ui.router', 'ngResource', 'ui.bootstrap']).config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+var myapp;
+(function (myapp) {
+    angular.module('myapp', ['ui.router', 'ngResource', 'ui.bootstrap']).config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $stateProvider
             .state('home', {
             url: '/',
             templateUrl: '/ngApp/views/home.html',
-            controller: productsapp.Controllers.HomeController,
-            controllerAs: 'controller'
+            controller: myapp.Controllers.HomeController,
+            controllerAs: 'vm'
         })
             .state('edit', {
-            url: '/edit/:id',
-            templateUrl: '/ngApp/views/edit.html',
-            controller: productsapp.Controllers.EditController,
-            controllerAs: 'controller'
+            url: '/edit-movie/:id',
+            templateUrl: '/ngApp/views/editMovie.html',
+            controller: myapp.Controllers.EditMovieController,
+            controllerAs: 'vm'
         })
-            .state('about', {
-            url: '/about',
-            templateUrl: '/ngApp/views/about.html',
-            controller: productsapp.Controllers.AboutController,
-            controllerAs: 'controller'
+            .state('add', {
+            url: '/add-movie',
+            templateUrl: '/ngApp/views/addMovie.html',
+            controller: myapp.Controllers.AddMovieController,
+            controllerAs: 'vm'
         })
             .state('notFound', {
             url: '/notFound',
@@ -27,4 +27,4 @@ var productsapp;
         $urlRouterProvider.otherwise('/notFound');
         $locationProvider.html5Mode(true);
     });
-})(productsapp || (productsapp = {}));
+})(myapp || (myapp = {}));

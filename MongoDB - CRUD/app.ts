@@ -1,4 +1,4 @@
-import products from './api/products';
+import movies from './api/movies';
 import Database from './db';
 
 // open database connection
@@ -6,11 +6,11 @@ Database.connect().then(() => {
   // drop everything
   Database.db.dropDatabase().then(() => {
     // seed with new products
-    Database.db.collection('products').insert([
-      {name:'Apples', price: 9.33},
-      {name:'Milk', price: 2.00},
-      {name:'Cheese', price: 4.55}
-    ]);
+    //Database.db.collection('products').insert([
+    //  {name:'Apples', price: 9.33},
+    //  {name:'Milk', price: 2.00},
+    //  {name:'Cheese', price: 4.55}
+    //]);
   });
 })
 import * as express from 'express';
@@ -43,7 +43,7 @@ app.use('/api', express.static(path.join(__dirname, 'api')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/api/products', products);
+app.use('/api/movies', movies);
 
 
 // redirect 404 to home for the sake of AngularJS client-side routes

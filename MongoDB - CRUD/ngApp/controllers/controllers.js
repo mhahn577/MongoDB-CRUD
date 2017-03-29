@@ -1,51 +1,42 @@
-var productsapp;
-(function (productsapp) {
+var myapp;
+(function (myapp) {
     var Controllers;
     (function (Controllers) {
         var HomeController = (function () {
-            function HomeController(productService) {
-                this.productService = productService;
-                this.products = productService.list();
+            function HomeController(movieService) {
+                this.movieService = movieService;
+                this.movies = this.movieService.getMovies();
             }
-            HomeController.prototype.save = function () {
-                var _this = this;
-                this.productService.save(this.product).then(function () {
-                    _this.products = _this.productService.list();
-                    _this.product = null;
-                });
-            };
-            HomeController.prototype.remove = function (id) {
-                var _this = this;
-                this.productService.remove(id).then(function () {
-                    _this.products = _this.productService.list();
-                });
+            HomeController.prototype.deleteMovie = function (id) {
+                this.movieService.removeMovie(id);
             };
             return HomeController;
         }());
         Controllers.HomeController = HomeController;
-        var EditController = (function () {
-            function EditController(productService, $state, $stateParams) {
-                this.productService = productService;
-                this.$state = $state;
-                this.$stateParams = $stateParams;
-                var productId = $stateParams['id'];
-                this.product = productService.get(productId);
+        var AddMovieController = (function () {
+            function AddMovieController(movieService) {
+                this.movieService = movieService;
             }
-            EditController.prototype.save = function () {
-                var _this = this;
-                this.productService.save(this.product).then(function () {
-                    _this.$state.go('home');
-                });
+            AddMovieController.prototype.addMovie = function () {
+                this.movieService.saveMovie(this.movie);
             };
-            return EditController;
+            return AddMovieController;
         }());
-        Controllers.EditController = EditController;
-        var AboutController = (function () {
-            function AboutController() {
-                this.message = 'Hello from the about page!';
+        Controllers.AddMovieController = AddMovieController;
+        var EditMovieController = (function () {
+            function EditMovieController(movieService, $stateParams) {
+                this.movieService = movieService;
+                this.$stateParams = $stateParams;
+                if ($stateParams) {
+                    this.id = $stateParams['id'];
+                }
             }
-            return AboutController;
+            EditMovieController.prototype.editMovie = function () {
+                this.movie.id = this.id;
+                this.movieService.saveMovie(this.movie);
+            };
+            return EditMovieController;
         }());
-        Controllers.AboutController = AboutController;
-    })(Controllers = productsapp.Controllers || (productsapp.Controllers = {}));
-})(productsapp || (productsapp = {}));
+        Controllers.EditMovieController = EditMovieController;
+    })(Controllers = myapp.Controllers || (myapp.Controllers = {}));
+})(myapp || (myapp = {}));

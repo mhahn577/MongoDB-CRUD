@@ -1,13 +1,8 @@
 "use strict";
-var products_1 = require("./api/products");
+var movies_1 = require("./api/movies");
 var db_1 = require("./db");
 db_1.default.connect().then(function () {
     db_1.default.db.dropDatabase().then(function () {
-        db_1.default.db.collection('products').insert([
-            { name: 'Apples', price: 9.33 },
-            { name: 'Milk', price: 2.00 },
-            { name: 'Cheese', price: 4.55 }
-        ]);
     });
 });
 var express = require("express");
@@ -30,7 +25,7 @@ app.use('/ngApp', express.static(path.join(__dirname, 'ngApp')));
 app.use('/api', express.static(path.join(__dirname, 'api')));
 app.use('/', index_1.default);
 app.use('/users', users_1.default);
-app.use('/api/products', products_1.default);
+app.use('/api/movies', movies_1.default);
 app.get('/*', function (req, res, next) {
     if (/.js|.html|.css|templates|js|scripts/.test(req.path) || req.xhr) {
         return next({ status: 404, message: 'Not Found' });

@@ -1,30 +1,25 @@
-namespace productsapp.Services {
+namespace myapp.Services {
+  export class MovieService {
+    public MovieResource
 
-  export class ProductService {
-      private ProductResource;
+    public saveMovie(movie) {
+      return this.MovieResource.save(movie);
+    }
 
-      public get(id) {
-        return this.ProductResource.get({id:id});
-      }
+    public getMovies() {
+      return this.MovieResource.query();
+    }
 
-      public list() {
-        return this.ProductResource.query()
-      }
+    public removeMovie(id) {
+      return this.MovieResource.delete({id: id});
+    }
 
-      public save(product) {
-        return this.ProductResource.save(product).$promise;
-      }
-
-      public remove(id) {
-        return this.ProductResource.remove({id:id}).$promise;
-      }
-
-      constructor($resource:ng.resource.IResourceService) {
-        this.ProductResource = $resource('/api/products');
-      }
-
+    public constructor(
+      public $resource
+    ) {
+      this.MovieResource = $resource('/api/movies/:id');
+    }
   }
 
-  angular.module('productsapp').service('productService', ProductService);
-
+  angular.module('myapp').service('movieService', MovieService);
 }

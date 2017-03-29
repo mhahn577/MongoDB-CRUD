@@ -1,26 +1,24 @@
-var productsapp;
-(function (productsapp) {
+var myapp;
+(function (myapp) {
     var Services;
     (function (Services) {
-        var ProductService = (function () {
-            function ProductService($resource) {
-                this.ProductResource = $resource('/api/products');
+        var MovieService = (function () {
+            function MovieService($resource) {
+                this.$resource = $resource;
+                this.MovieResource = $resource('/api/movies/:id');
             }
-            ProductService.prototype.get = function (id) {
-                return this.ProductResource.get({ id: id });
+            MovieService.prototype.saveMovie = function (movie) {
+                return this.MovieResource.save(movie);
             };
-            ProductService.prototype.list = function () {
-                return this.ProductResource.query();
+            MovieService.prototype.getMovies = function () {
+                return this.MovieResource.query();
             };
-            ProductService.prototype.save = function (product) {
-                return this.ProductResource.save(product).$promise;
+            MovieService.prototype.removeMovie = function (id) {
+                return this.MovieResource.delete({ id: id });
             };
-            ProductService.prototype.remove = function (id) {
-                return this.ProductResource.remove({ id: id }).$promise;
-            };
-            return ProductService;
+            return MovieService;
         }());
-        Services.ProductService = ProductService;
-        angular.module('productsapp').service('productService', ProductService);
-    })(Services = productsapp.Services || (productsapp.Services = {}));
-})(productsapp || (productsapp = {}));
+        Services.MovieService = MovieService;
+        angular.module('myapp').service('movieService', MovieService);
+    })(Services = myapp.Services || (myapp.Services = {}));
+})(myapp || (myapp = {}));
